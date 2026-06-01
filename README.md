@@ -1,31 +1,31 @@
 # py-pdf-editor
 
-Un tool Python minimale, leggero e nativo per Linux pensato per fare due cose sacrosante sui PDF (unire e dividere) senza portarsi dietro dipendenze mastodontiche o interfacce web gonfie di JavaScript.
+A minimal, lightweight, and native Linux Python utility designed to handle two essential PDF tasks—merging and splitting—without bringing in bloated dependencies or heavy web-based interfaces.
 
-La particolarità? È strutturato in modo totalmente modulare: separa nettamente il motore logico dalle interfacce. Questo significa che puoi usarlo al volo da terminale (stile utility nativa Linux) o lanciare la GUI classica se preferisci il punta-e-clicca.
+The project features a fully modular design, separating the core processing engine from the user interfaces. This allows you to use it seamlessly from the terminal as a native Linux utility or launch a clean desktop GUI when you prefer a point-and-click approach.
 
-## 🛠️ Com'è strutturato il codice
+## 🛠️ Project Structure
 
-Invece del classico "file unico" caotico, il progetto è diviso in tre componenti con responsabilità separate, ottimo se vuoi giocarci, estenderlo o fare refactoring:
+Instead of a chaotic "single-file" setup, the project is split into three components with separate responsibilities, making it easy to experiment with, extend, or refactor:
 
-* `pdf_engine.py`: Il cuore pulsante. Gestisce la manipolazione reale dei file (sfruttando `pypdf`) e integra una serie di validazioni preventive sui path per evitare brutte sorprese.
-* `gui.py`: L'interfaccia grafica nativa in Tkinter, ridotta all'osso e senza fronzoli.
-* `main.py`: Il regista del tool. Se gli passi degli argomenti agisce da CLI, altrimenti si accorge che non c'è input e tira su la GUI caricando Tkinter in modo dinamico.
+* `pdf_engine.py`: The core engine. It handles the actual file manipulation (powered by `pypdf`) and integrates a set of preventive path validations.
+* `gui.py`: A lightweight, distraction-free desktop interface built with native Tkinter.
+* `main.py`: The orchestrator. It parses CLI arguments to trigger the terminal interface; if no arguments are provided, it dynamically imports and fires up the GUI.
 
-## ✨ Le chicche tecniche (Safety First)
+## ✨ Technical Highlights (Safety First)
 
-Anche se è un progetto leggero, non è stato trascurato l'aspetto della robustezza:
-* **Anti-Data-Loss:** Se provi a fare un'estrazione impostando come output lo stesso nome del file di input, il motore intercetta il conflitto e si blocca *prima* di aprire lo stream di scrittura, salvando il file originale dall'azzeramento (0 byte).
-* **Parsing dell'intervallo resiliente:** La stringa dell'intervallo viene ripulita preventivamente dagli spazi bianchi (es. `" 3 - 10 "` diventa `"3-10"`), digerendo sia notazioni classiche che pagine singole.
-* **Validazione preventiva:** Controlla l'esistenza dei file, i permessi di scrittura sulla cartella di destinazione e la reale lunghezza del PDF prima di iniziare i cicli di copia delle pagine.
+Even though it is a lightweight tool, robustness was a priority during development:
+* **Anti-Data-Loss:** If you attempt to extract pages and accidentally set the output path to the exact same name as the input file, the engine intercepts the conflict and aborts *before* opening the write stream, saving your original file from being wiped to 0 bytes.
+* **Resilient Interval Parsing:** The page range string is automatically stripped of whitespaces (e.g., `" 3 - 10 "` becomes `"3-10"`), gracefully digesting both standard notations and single-page isolation.
+* **Preventive Validation:** It verifies file existence, checks write permissions on the destination folder, and validates the actual PDF page length before launching any page-copying loops.
 
 ## 🚀 Quick Start
 
-### 1. Clona e prepara l'ambiente
-Niente installazioni globali "sporche" nel sistema. Creiamo un ambiente virtuale isolato:
+### 1. Clone and Setup Environment
+No messy global installations. Let's set up an isolated virtual environment:
 
 ```bash
-git clone [https://github.com/tuo-username/py-pdf-editor.git](https://github.com/tuo-username/py-pdf-editor.git)
+git clone https://github.com/eddiBressan/py-pdf-editor.git
 cd py-pdf-editor
 python3 -m venv venv
 source venv/bin/activate
