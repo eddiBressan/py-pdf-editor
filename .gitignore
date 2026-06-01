@@ -1,0 +1,12 @@
+# Escludi l'ambiente virtuale (importantissimo!)
+venv/
+.venv/
+
+# Escludi la cache di Python (i file binari autogenerati che non servono a nessuno)
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Escludi i PDF di test locali (così non carichi i tuoi documenti privati online)
+*.pdf
